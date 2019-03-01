@@ -34,9 +34,11 @@ class Student
       WHERE name = ?
     SQL
 
-    DB[:conn].execute(sql, name).map do |row|
-      return self.new_from_db(row)
-    end
+    # DB[:conn].execute(sql, name).map do |row|
+    #   return self.new_from_db(row)
+    # end
+    result = DB[:conn].execute(sql, name)[0]
+    Student.new(result[0], result[1], result[2])
   end
 
   def self.all_students_in_grade_9
